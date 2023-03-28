@@ -23,38 +23,32 @@ namespace Jacek_Matulewski___maszyna_turinga___Moja
             int położenieGłowicy = SprawdźStanMaszynyIZnajdźPozycjęgłowicy(łańcuchOpisującyStanMaszyny);
             WyświetlStanMaszyny(łańcuchOpisującyStanMaszyny);
 
-
-            //Console.WriteLine(pozycjaGłowicy);
-            //char[] łańcuchZnaków = łańcuchOpisującyStanMaszyny.ToCharArray();
-
-            //for (int i = 0; i < kodProgramu.Length; i++)
-            //{
-            //    if (kodProgramu[i].Substring(0, 1).Equals(łańcuchZnaków[pozycjaGłowicy])&& kodProgramu[i].Substring(1, 2).Equals(łańcuchZnaków[pozycjaGłowicy+1]))
-            //    {
-
-            //        if (kodProgramu[i].Substring(2).Equals("R"))
-            //        {
-            //            łańcuchZnaków[pozycjaGłowicy] = łańcuchZnaków[++pozycjaGłowicy];
-            //            łańcuchZnaków[pozycjaGłowicy] = kodProgramu[i].ToCharArray()[3];
-            //            i = 0;
-            //        }else if (kodProgramu[i].Substring(2).Equals("L"))
-            //        {
-            //            łańcuchZnaków[pozycjaGłowicy] = łańcuchZnaków[--pozycjaGłowicy];
-            //            łańcuchZnaków[pozycjaGłowicy] = kodProgramu[i].ToCharArray()[3];
-            //            i = 0;
-            //        }
-            //        else
-            //        {
-            //            łańcuchZnaków[pozycjaGłowicy] = kodProgramu[i].ToCharArray()[3];
-            //            łańcuchZnaków[pozycjaGłowicy+1] = kodProgramu[i].ToCharArray()[2];
-            //            i = 0;
-            //        }
-            //        Console.WriteLine();
-            //        foreach(char znak in łańcuchZnaków) Console.Write(znak);
-            //        Console.WriteLine(pozycjaGłowicy);
-            //    }
-            //}
-
+            wykonajProgram(położenieGłowicy, łańcuchOpisującyStanMaszyny, listing);
+        }
+        public static void wykonajProgram(int położenieGłowicy, char[] łańcuchOpisującyStanMaszyny, Czwórki listaKomend)
+        {
+            while (listaKomend.ContainsKey((łańcuchOpisującyStanMaszyny[położenieGłowicy], łańcuchOpisującyStanMaszyny[położenieGłowicy + 1])))
+            {
+                (char, char) wartośćZnalezionejKomendy = listaKomend.Values[listaKomend.IndexOfKey((łańcuchOpisującyStanMaszyny[położenieGłowicy], łańcuchOpisującyStanMaszyny[położenieGłowicy + 1]))];
+                    
+                switch (wartośćZnalezionejKomendy.Item2)
+                {
+                    case 'R':
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy] = łańcuchOpisującyStanMaszyny[++położenieGłowicy];
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy] = wartośćZnalezionejKomendy.Item1;
+                        break;
+                    case 'L':
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy] = łańcuchOpisującyStanMaszyny[--położenieGłowicy];
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy] = wartośćZnalezionejKomendy.Item1;
+                        break;
+                    default:
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy] = wartośćZnalezionejKomendy.Item1;
+                        łańcuchOpisującyStanMaszyny[położenieGłowicy+1] = wartośćZnalezionejKomendy.Item2;
+                        break;
+                }
+                Console.WriteLine();
+                WyświetlStanMaszyny(łańcuchOpisującyStanMaszyny);
+            }
         }
         public static Czwórki SprawdźIUtwórzListęZTaśmy(string[] kodProgramu)
         {
